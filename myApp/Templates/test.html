@@ -1,0 +1,140 @@
+<div>
+    <div id="top">
+        <button ng-click="scrollTo('bottom')">Go to bottom</button>
+    </div><br /><br />
+    10 + 20 = {{ 10 + 20 }}
+    <div>
+        <input type="text" ng-model="message" /> <br />
+        {{message}}
+    </div><br /><br />
+
+
+    <!-- <div ng-include="empView"></div><br /><br /> -->
+
+
+    <div>
+        <img ng-src="{{country.flag}}" style="height: 100px; width: 200px;">
+    </div>
+    <div>
+        <h2>{{country.name}}</h2>
+    </div><br /><br />
+
+
+    <div>
+        <div>
+            Rows to display: <input type="number" min="0" max="5" ng-model="rowLimit" />
+            Sort By:
+            <select ng-model="sortBy">
+                <option value="firstName">Name ASC</option>
+                <option value="-firstName">Name DSC</option>
+                <option value="salary">Salary ASC</option>
+                <option value="-salary">Salary DSC</option>
+                <option value="dob">DOB ASC</option>
+                <option value="-dob">DOB DSC</option>
+            </select><br /><br />
+            <input type="text" placeholder="Search name or gender" ng-model="searchText" /><br /><br />
+            <input type="checkbox" ng-model="hideSalary" /> Show Salary
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th ng-click="sortData('firstName')">
+                    Name <div ng-class="getSortClass('firstName')"></div>
+                </th>
+                <th ng-click="sortData('dob')">
+                    DOB <div ng-class="getSortClass('dob')"></div>
+                </th>
+                <th>Gender</th>
+                <th ng-hide="!hideSalary" ng-click="sortData('salary')">
+                    Salary (number) <div ng-class="getSortClass('salary')"></div>
+                </th>
+                <th ng-hide="!hideSalary" ng-click="sortData('salary')">
+                    Salary (currency) <div ng-class="getSortClass('salary')"></div>
+                </th>
+                <th ng-show="!hideSalary">
+                    Salary
+                </th>
+                <th>Is Indian</th>
+            </tr>
+            <tr ng-repeat="emp in employees | limitTo: rowLimit | orderBy: sortBy : reverseSort | filter: search">
+                <td>{{$index + 1}}</td>
+                <td>{{emp.firstName + ' ' + emp.lastName | uppercase}}</td>
+                <td>{{emp.dob | date: 'dd/MMM/yyyy'}}</td>
+                <td>{{emp.gender | lowercase}}</td>
+                <td ng-hide="!hideSalary">{{emp.salary | number:2}}</td>
+                <td ng-hide="!hideSalary">{{emp.salary | currency:'₹':1}}</td>
+                <td ng-show="!hideSalary">######</td>
+                <td>{{emp.indian | isIndian}}</td>
+
+            </tr>
+        </table>
+    </div><br /><br />
+
+
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Technology</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="tech in technologies">
+                <td>{{$index + 1}}</td>
+                <td>{{tech.name | lowercase}}</td>
+                <td>{{tech.likes}}</td>
+                <td>{{tech.dislikes}}</td>
+                <td>
+                    <button ng-click="like($index)">Like</button>
+                    <button ng-click="dislike($index)">Dislike</button>
+                </td>
+            </tr>
+        </table>
+    </div><br /><br />
+
+
+    <div>
+        <div>
+            <input type="text" placeholder="Search employee" ng-model="searchEmp" />
+        </div><br /><br />
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Date of Birth</th>
+                <th>Salary</th>
+                <th>Image</th>
+            </tr>
+            <tr ng-repeat="emp in empList |  filter: searchEmp | orderBy: '-firstName'">
+                <td>{{emp.firstName | uppercase}}</td>
+                <td>{{emp.lastName | lowercase}}</td>
+                <td>{{emp.age}}</td>
+                <td>{{emp.contactNumber}}</td>
+                <td>{{emp.email}}</td>
+                <td>{{emp.dob}}</td>
+                <td>{{emp.salary | convertSalary}}</td>
+                <td><img ng-src='{{emp.imageUrl}}' style="height: 100px; width: 150px;" /></td>
+            </tr>
+        </table>
+    </div> <br /> <br />
+
+    <div>
+        <div>
+            Your String: <input type="text" ng-model="input">
+        </div>
+        <div>
+            Processed String: <input type="text" ng-model="output">
+        </div>
+        <div>
+            <button ng-click="transformString(input)">Process</button>
+        </div>
+    </div><br /><br />
+
+    <div id="bottom">
+        <button ng-click="scrollTo('top')">Go to top</button>
+    </div><br /><br />
+</div>
